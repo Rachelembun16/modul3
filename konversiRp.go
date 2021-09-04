@@ -1,10 +1,8 @@
 package main
 
 import (
-	//"bytes"
 	"fmt"
 	"strconv"
-	"strings"
 )
 
 func main() {
@@ -12,9 +10,12 @@ func main() {
 	fmt.Println("===KONVERSI RUPIAH===")
 	fmt.Print("Masukkan Rupiah = ")
 	fmt.Scan(&uang)
-	newText1 := ""
-	//buf := &bytes.Buffer{}
+
+	fltUang := float64(uang)
+
 	var strUang = strconv.Itoa(uang)
+	usdUang := fltUang * 0.0000701662
+	// intUang := int32(usdUang)
 
 	arrUang := []rune(strUang)
 	for i, j := 0, len(arrUang)-1; i < j; i, j = i+1, j-1 {
@@ -22,34 +23,27 @@ func main() {
 	}
 
 	var uangRev = string(arrUang)
+	var money = ""
+	i := 0
 
-	i := len(uangRev)
-	for i >= 0 {
-		//if i%3 == 0 && i != 0 {
-		newText1 = strings.Replace(uangRev, "", ".", 2)
-		//}
-		i = i - 3
+	for i < len(uangRev) {
+		if i%3 == 0 && i != 0 {
+			money = money + "." + string(uangRev[i])
+			i = i + 1
+		} else {
+			money = money + string(uangRev[i])
+			i = i + 1
+		}
+
 	}
-	fmt.Print(newText1)
-	// var uangRev =
-	//var zero = strings.Count(strUang, "0")
-	//var zero1 = strings.Split(strUang, "")
-	// for i := 0; i < len(strUang)-1; i++ {
-	// 	if i%3 == 0 {
-	// 		// var angka = string(strUang[i])
-	// 		var money = strings.Join(strUang, ",")
-	// 		fmt.Printf("Rp %s,00", money)
-	// 	} else {
-	// 		fmt.Print(strUang[i])
-	// 	}
-	// }
+	arrMoney := []rune(money)
 
-	//var fltUang, err = strconv.ParseFloat(uang, 32)
+	for i, j := 0, len(arrMoney)-1; i < j; i, j = i+1, j-1 {
+		arrMoney[i], arrMoney[j] = arrMoney[j], arrMoney[i]
+	}
 
-	// fltuang := float32(uang)
-	// fmt.Printf("f is %f", fltuang)
+	fmt.Printf("Konversi Rupiah= Rp%s,00", string(arrMoney))
+	fmt.Println("")
+	fmt.Printf("Konversi USD= $%.2f", usdUang)
 
-	// if err == nil {
-	// fmt.Printf("Rp %s,00", money)
-	// }
 }
